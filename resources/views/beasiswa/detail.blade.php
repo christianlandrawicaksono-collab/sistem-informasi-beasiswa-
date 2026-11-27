@@ -3,45 +3,56 @@
 @section('title', $beasiswa->nama_program)
 
 @section('content')
-<div class="max-w-4xl mx-auto my-6">
-    <div class="mb-6">
-        <a href="{{ route('landing') }}" class="text-xs font-bold text-amber-600 hover:underline flex items-center space-x-1 mb-2">
-            <i class="fa-solid fa-arrow-left"></i>
+<div class="max-w-5xl mx-auto my-4">
+    <div data-motion="hero-item" class="mb-8">
+        <a href="{{ route('landing') }}" class="inline-flex items-center gap-1.5 text-xs font-semibold text-[#5B6573] hover:text-[#FF7448] transition mb-4">
+            <svg class="size-3.5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
             <span>Kembali ke Katalog Beasiswa</span>
         </a>
-        <div class="flex items-center space-x-2 mb-1">
-            <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700">Dibuka</span>
-            <span class="text-xs font-medium text-slate-400">• {{ $beasiswa->kategori }}</span>
+
+        <div class="flex flex-wrap items-center gap-2 mb-3">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E5F3EE] text-[#237C65] text-xs font-semibold">
+                <span class="size-1.5 rounded-full bg-[#237C65]"></span>
+                Pendaftaran Dibuka
+            </span>
+            <span class="px-3 py-1 rounded-full bg-[#F1EBE9] text-[#0F151D] text-xs font-semibold">
+                {{ $beasiswa->kategori }}
+            </span>
         </div>
-        <h1 class="text-3xl font-extrabold text-slate-900">{{ $beasiswa->nama_program }}</h1>
-        <p class="text-sm text-slate-500 mt-1">Diselenggarakan oleh: <strong class="text-slate-700">{{ $beasiswa->penyelenggara }}</strong></p>
+
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-[#0F151D] leading-tight">{{ $beasiswa->nama_program }}</h1>
+        <p class="text-sm text-[#5B6573] mt-2">Diselenggarakan oleh <strong class="text-[#0F151D]">{{ $beasiswa->penyelenggara }}</strong></p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <!-- Main Details -->
-        <div class="md:col-span-2 space-y-6">
-            <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
-                <h3 class="text-base font-bold text-slate-900 mb-3">Deskripsi Program</h3>
-                <p class="text-sm text-slate-600 leading-relaxed">{{ $beasiswa->deskripsi }}</p>
+        <div class="lg:col-span-2 space-y-6">
+            <div data-motion="hero-item" class="nomu-card p-6 sm:p-7">
+                <span class="nomu-label text-[#FF7448] block mb-2">Tentang Program</span>
+                <h2 class="text-lg font-bold text-[#0F151D] mb-3">Deskripsi &amp; Tujuan Beasiswa</h2>
+                <p class="text-sm text-[#5B6573] leading-relaxed">{{ $beasiswa->deskripsi }}</p>
             </div>
 
-            <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
-                <h3 class="text-base font-bold text-slate-900 mb-3">Persyaratan & Berkas Administrasi</h3>
-                <div class="text-sm text-slate-600 whitespace-pre-line leading-relaxed">{{ $beasiswa->persyaratan }}</div>
+            <div data-motion="reveal" class="nomu-card p-6 sm:p-7">
+                <span class="nomu-label text-[#FF7448] block mb-2">Administrasi</span>
+                <h2 class="text-lg font-bold text-[#0F151D] mb-3">Persyaratan &amp; Berkas Wajib</h2>
+                <div class="text-sm text-[#5B6573] whitespace-pre-line leading-relaxed bg-[#FFF9F6] p-4 rounded-2xl border border-[#0F151D]/6">{{ $beasiswa->persyaratan }}</div>
             </div>
 
-            <!-- Kriteria Bobot SAW -->
             @if($beasiswa->kriteria->isNotEmpty())
-                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
-                    <h3 class="text-base font-bold text-slate-900 mb-3">Kriteria Penilaian Seleksi (SAW)</h3>
-                    <div class="grid grid-cols-2 gap-3">
+                <div data-motion="reveal" class="nomu-panel p-6 sm:p-7">
+                    <span class="nomu-label text-[#526991] block mb-1.5">Metode Seleksi</span>
+                    <h2 class="text-lg font-bold text-[#0F151D] mb-4">Kriteria Penilaian SPK (SAW)</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         @foreach($beasiswa->kriteria as $c)
-                            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex justify-between items-center text-xs">
+                            <div class="p-4 rounded-2xl bg-[#E4EDFF]/70 border border-[#526991]/15 flex justify-between items-center">
                                 <div>
-                                    <span class="font-bold text-slate-800 block">{{ $c->nama_kriteria }}</span>
-                                    <span class="text-[10px] text-slate-400 uppercase">Sifat: {{ $c->sifat }}</span>
+                                    <span class="nomu-label text-[#526991] block">{{ $c->kode_kriteria }} · {{ $c->sifat }}</span>
+                                    <span class="font-bold text-sm text-[#0F151D]">{{ $c->nama_kriteria }}</span>
                                 </div>
-                                <span class="font-bold text-purple-700 bg-purple-50 px-2.5 py-1 rounded-lg">{{ $c->bobot }}%</span>
+                                <span class="font-mono font-extrabold text-base text-[#243C61] bg-white px-3 py-1 rounded-full shadow-xs tabular-nums">
+                                    {{ $c->bobot }}%
+                                </span>
                             </div>
                         @endforeach
                     </div>
@@ -49,22 +60,24 @@
             @endif
         </div>
 
-        <!-- Sidebar Action -->
-        <div class="space-y-6">
-            <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
-                <h3 class="text-sm font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100">Informasi Pendaftaran</h3>
-                <div class="space-y-3 text-xs mb-6">
-                    <div class="flex justify-between">
-                        <span class="text-slate-400">Batas Waktu:</span>
-                        <span class="font-bold text-slate-800">{{ $beasiswa->tgl_tutup->format('d M Y') }}</span>
+        <!-- Sidebar CTA Card -->
+        <div class="lg:col-span-1">
+            <div data-motion="hero-item" class="nomu-panel p-6 sticky top-24">
+                <span class="nomu-label text-[#FF7448] block mb-1">Ringkasan</span>
+                <h3 class="text-lg font-bold text-[#0F151D] mb-5 pb-3 border-b border-[#0F151D]/8">Informasi Pendaftaran</h3>
+
+                <div class="space-y-3.5 text-sm mb-6">
+                    <div class="flex justify-between items-center">
+                        <span class="text-[#5B6573]">Batas Waktu</span>
+                        <span class="font-bold text-[#0F151D] font-mono tabular-nums">{{ $beasiswa->tgl_tutup->format('d M Y') }}</span>
                     </div>
-                    <div class="flex justify-between">
-                        <span class="text-slate-400">Alokasi Kuota:</span>
-                        <span class="font-bold text-slate-800">{{ $beasiswa->kuota }} Mahasiswa</span>
+                    <div class="flex justify-between items-center">
+                        <span class="text-[#5B6573]">Alokasi Kuota</span>
+                        <span class="font-bold text-[#0F151D] tabular-nums">{{ $beasiswa->kuota }} Mahasiswa</span>
                     </div>
-                    <div class="flex justify-between">
-                        <span class="text-slate-400">Minimal IPK:</span>
-                        <span class="font-bold text-slate-800">{{ number_format($beasiswa->ipk_minimal, 2) }}</span>
+                    <div class="flex justify-between items-center">
+                        <span class="text-[#5B6573]">Minimal IPK</span>
+                        <span class="font-bold text-[#FF7448] font-mono tabular-nums">{{ number_format($beasiswa->ipk_minimal, 2) }}</span>
                     </div>
                 </div>
 
@@ -72,17 +85,17 @@
                     @if(auth()->user()->isMahasiswa())
                         <form action="{{ route('mahasiswa.ajukan', $beasiswa->id) }}" method="POST">
                             @csrf
-                            <button type="submit" class="w-full py-3 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl text-sm transition shadow-md shadow-amber-200">
+                            <button type="submit" data-motion="pill-press" class="w-full py-3.5 rounded-full nomu-cta-btn font-bold text-sm cursor-pointer">
                                 Ajukan Beasiswa Ini
                             </button>
                         </form>
                     @else
-                        <div class="p-3 bg-slate-100 rounded-xl text-xs text-slate-500 text-center">
-                            Anda login sebagai {{ strtoupper(auth()->user()->role) }}. Pendaftaran hanya untuk akun mahasiswa.
+                        <div class="p-3.5 rounded-2xl bg-[#F1EBE9] text-xs text-[#5B6573] text-center">
+                            Login sebagai <strong class="text-[#0F151D]">{{ strtoupper(auth()->user()->role) }}</strong>. Pendaftaran khusus akun Mahasiswa.
                         </div>
                     @endif
                 @else
-                    <a href="{{ route('login') }}" class="block text-center w-full py-3 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl text-sm transition shadow-md shadow-amber-200">
+                    <a href="{{ route('login') }}" data-motion="pill-press" class="block text-center w-full py-3.5 rounded-full nomu-cta-btn font-bold text-sm">
                         Masuk untuk Mendaftar
                     </a>
                 @endauth

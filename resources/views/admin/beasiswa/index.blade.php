@@ -1,63 +1,60 @@
 @extends('layouts.app')
 
-@section('title', 'Kelola Program Beasiswa')
+@section('title', 'Daftar Program Beasiswa')
 
 @section('content')
-<div class="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div data-motion="hero-item" class="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
     <div>
-        <h1 class="text-2xl font-extrabold text-slate-900">Daftar Program Beasiswa</h1>
-        <p class="text-xs text-slate-500">Kelola periode aktif, kuota penerima, dan kriteria penilaian SPK.</p>
+        <a href="{{ route('admin.dashboard') }}" class="inline-flex items-center gap-1.5 text-xs font-semibold text-[#5B6573] hover:text-[#FF7448] transition mb-2">
+            <svg class="size-3.5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+            <span>Dashboard Admin</span>
+        </a>
+        <h1 class="text-2xl font-extrabold text-[#0F151D]">Kelola Program Beasiswa</h1>
+        <p class="text-xs text-[#5B6573] mt-0.5">Daftar seluruh program beasiswa beserta kuota dan jumlah pelamar aktif.</p>
     </div>
-    <a href="{{ route('admin.beasiswa.create') }}" class="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold rounded-xl transition shadow-sm flex items-center space-x-1.5">
-        <i class="fa-solid fa-plus"></i>
+
+    <a href="{{ route('admin.beasiswa.create') }}" data-motion="pill-press" class="nomu-cta-btn px-5 py-2.5 rounded-full text-xs font-bold inline-flex items-center gap-1.5 shrink-0">
+        <svg class="size-3.5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg>
         <span>Tambah Beasiswa</span>
     </a>
 </div>
 
-<div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
-    <table class="w-full text-left text-sm text-slate-600">
-        <thead class="bg-slate-50 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-            <tr>
-                <th class="px-6 py-3.5">Nama Program</th>
-                <th class="px-6 py-3.5">Kategori</th>
-                <th class="px-6 py-3.5">Penyelenggara</th>
-                <th class="px-6 py-3.5 text-center">Kuota</th>
-                <th class="px-6 py-3.5 text-center">Pendaftar</th>
-                <th class="px-6 py-3.5">Batas Waktu</th>
-                <th class="px-6 py-3.5 text-center">Status</th>
-            </tr>
-        </thead>
-        <tbody class="divide-y divide-slate-100 font-medium">
-            @foreach($beasiswas as $b)
-                <tr class="hover:bg-slate-50/50">
-                    <td class="px-6 py-4 font-bold text-slate-900">
-                        {{ $b->nama_program }}
-                    </td>
-                    <td class="px-6 py-4 text-xs">
-                        {{ $b->kategori }}
-                    </td>
-                    <td class="px-6 py-4 text-xs text-slate-500">
-                        {{ $b->penyelenggara }}
-                    </td>
-                    <td class="px-6 py-4 text-center font-bold">
-                        {{ $b->kuota }}
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        <span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 text-xs font-bold">
-                            {{ $b->pengajuan_count }} Pelamar
-                        </span>
-                    </td>
-                    <td class="px-6 py-4 text-xs">
-                        {{ $b->tgl_tutup->format('d M Y') }}
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        <span class="text-xs font-bold px-2.5 py-1 rounded-full uppercase {{ $b->status === 'buka' ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-500' }}">
-                            {{ $b->status }}
-                        </span>
-                    </td>
+<div data-motion="reveal" class="nomu-panel overflow-hidden">
+    <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm">
+            <thead class="bg-[#FFF9F6] text-[11px] font-mono uppercase tracking-wider text-[#5B6573] border-b border-[#0F151D]/8">
+                <tr>
+                    <th class="px-6 py-3.5">Nama Program</th>
+                    <th class="px-6 py-3.5">Kategori</th>
+                    <th class="px-6 py-3.5">Penyelenggara</th>
+                    <th class="px-6 py-3.5 text-center">Kuota</th>
+                    <th class="px-6 py-3.5 text-center">Pendaftar</th>
+                    <th class="px-6 py-3.5">Batas Waktu</th>
+                    <th class="px-6 py-3.5 text-center">Status</th>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
+            </thead>
+            <tbody data-motion="table-stagger" class="divide-y divide-[#0F151D]/6">
+                @foreach($beasiswas as $b)
+                    <tr class="hover:bg-[#FFF9F6]/60 transition">
+                        <td class="px-6 py-4 font-bold text-[#0F151D]">{{ $b->nama_program }}</td>
+                        <td class="px-6 py-4 text-xs text-[#0F151D]">{{ $b->kategori }}</td>
+                        <td class="px-6 py-4 text-xs text-[#5B6573]">{{ $b->penyelenggara }}</td>
+                        <td class="px-6 py-4 text-center font-mono font-bold tabular-nums">{{ $b->kuota }}</td>
+                        <td class="px-6 py-4 text-center">
+                            <span class="px-3 py-1 rounded-full bg-[#E4EDFF] text-[#243C61] text-xs font-bold tabular-nums">
+                                {{ $b->pengajuan_count }} Pelamar
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 text-xs font-mono tabular-nums">{{ $b->tgl_tutup->format('d M Y') }}</td>
+                        <td class="px-6 py-4 text-center">
+                            <span class="text-[11px] font-bold px-3 py-1 rounded-full uppercase {{ $b->status === 'buka' ? 'bg-[#E5F3EE] text-[#237C65]' : 'bg-[#F1EBE9] text-[#5B6573]' }}">
+                                {{ $b->status }}
+                            </span>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 </div>
 @endsection

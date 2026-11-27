@@ -6,6 +6,132 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+    /* Nomu-Inspired Warm Editorial Palette */
+    --color-canvas: #FFF9F6;
+    --color-ink: #0F151D;
+    --color-muted-ink: #5B6573;
+    --color-coral: #FF7448;
+    --color-coral-deep: #F13F07;
+    --color-coral-soft: #FFEAE3;
+    --color-periwinkle: #D3E1FF;
+    --color-periwinkle-tint: #E4EDFF;
+    --color-periwinkle-ink: #243C61;
+    --color-bubble: #F1EBE9;
+    --color-paper: #F7F5EE;
+    --color-emerald-trust: #237C65;
+    --color-emerald-soft: #E5F3EE;
+    --color-dark-surface: #0D1117;
+    --color-dark-card: #1B232E;
+}
+
+:root {
+    --nomu-bg: #FFF9F6;
+    --nomu-card: #FFFFFF;
+    --nomu-ink: #0F151D;
+    --nomu-muted: rgba(15, 21, 29, 0.62);
+    --nomu-primary: #FF7448;
+    --nomu-secondary: #D3E1FF;
+    --nomu-bubble: #F1EBE9;
+    --nomu-line: rgba(15, 21, 29, 0.08);
+    --nomu-cta: linear-gradient(92.45deg, #F13F07, #FF7448);
+    --nomu-raised: 0 16px 40px -24px rgba(15, 21, 29, 0.28);
+    --nomu-float: 0 16px 44px -12px rgba(15, 21, 29, 0.20);
+    --nomu-glass: inset 0 0.5px 0 0 rgba(255, 255, 255, 0.45), 0 6px 18px -8px rgba(241, 63, 7, 0.42);
+    --nomu-ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+        background-color: var(--nomu-bg);
+        color: var(--nomu-ink);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+        background-color: var(--nomu-bg);
+        color: var(--nomu-ink);
+        font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    }
+
+    h1, h2, h3, h4 {
+        letter-spacing: -0.025em;
+    }
+}
+
+/* Subtle Nomu Ambient Background Layer */
+.nomu-ambient-bg {
+    background-color: var(--nomu-bg);
+    background-image:
+        radial-gradient(60% 45% at 15% 0%, rgba(255, 116, 72, 0.08) 0%, rgba(255, 249, 246, 0) 100%),
+        radial-gradient(50% 40% at 88% 8%, rgba(211, 225, 255, 0.45) 0%, rgba(255, 249, 246, 0) 100%);
+}
+
+/* Signature Nomu Pill CTA Button */
+.nomu-cta-btn {
+    background: var(--nomu-cta);
+    color: #FFFFFF;
+    box-shadow: var(--nomu-glass);
+    transition: transform 180ms var(--nomu-ease), box-shadow 180ms var(--nomu-ease), filter 180ms var(--nomu-ease);
+}
+.nomu-cta-btn:hover {
+    filter: brightness(1.04);
+    box-shadow: inset 0 0.5px 0 0 rgba(255, 255, 255, 0.55), 0 12px 24px -8px rgba(241, 63, 7, 0.48);
+}
+
+/* Signature Nomu Elevated Card & Outer Frame Panel */
+.nomu-panel {
+    background: var(--nomu-card);
+    border: 1px solid var(--nomu-line);
+    border-radius: 32px;
+    box-shadow: var(--nomu-raised);
+}
+
+.nomu-card {
+    background: var(--nomu-card);
+    border: 1px solid var(--nomu-line);
+    border-radius: 24px;
+    box-shadow: 0 10px 30px -22px rgba(15, 21, 29, 0.24);
+    transition: transform 240ms var(--nomu-ease), box-shadow 240ms var(--nomu-ease), border-color 240ms var(--nomu-ease);
+}
+.nomu-card-interactive:hover {
+    border-color: rgba(255, 116, 72, 0.28);
+    box-shadow: var(--nomu-float);
+}
+
+/* Floating Pill Navbar */
+.nomu-nav-pill {
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(15, 21, 29, 0.08);
+    box-shadow: 0 12px 32px -14px rgba(15, 21, 29, 0.16);
+}
+
+/* Nomu Micro-Label Typography */
+.nomu-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+/* Tabular Numbers for Ranks, IPK, Scores */
+.tabular-nums {
+    font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 }

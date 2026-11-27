@@ -54,3 +54,21 @@ Route::middleware(['auth', 'role:reviewer,admin'])->prefix('reviewer')->name('re
     Route::get('/dashboard', [ReviewerController::class, 'dashboard'])->name('dashboard');
     Route::post('/beasiswa/{beasiswa}/hitung-saw', [ReviewerController::class, 'hitungSaw'])->name('hitung.saw');
 });
+
+// Helper Setup Database Otomatis via Browser
+Route::get('/setup-database', function () {
+    try {
+        \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+        $mig = \Illuminate\Support\Facades\Artisan::output();
+
+        \Illuminate\Support\Facades\Artisan::call('db:seed', ['--force' => true]);
+        $seed = \Illuminate\Support\Facades\Artisan::output();
+
+        \Illuminate\Support\Facades\Artisan::call('storage:link');
+        $link = \Illuminate\Support\Facades\Artisan::output();
+
+        return "<pre style='background:#0f172a;color:#10b981;padding:24px;border-radius:12px;font-family:monospace;font-size:14px;line-height:1.5;'>=== BERHASIL SETUP DATABASE SCOLA ===\n\n" . e($mig) . "\n" . e($seed) . "\n" . e($link) . "\n<a href=\"/\" style=\"color:#f59e0b;font-weight:bold;text-decoration:underline;\">>>> KLIK DI SINI UNTUK BUKA BERANDA SCOLA <<<</a></pre>";
+    } catch (\Throwable $e) {
+        return "<pre style='background:#0f172a;color:#ef4444;padding:24px;border-radius:12px;font-family:monospace;font-size:14px;line-height:1.5;'>=== GAGAL KONEKSI / SETUP DATABASE ===\n\nPesan Error: " . e($e->getMessage()) . "\n\nPastikan Service MySQL sudah dibuat di Railway dan variabel DB_HOST dsb sudah dimasukkan di tab Variables.</pre>";
+    }
+});
